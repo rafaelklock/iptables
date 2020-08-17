@@ -31,18 +31,13 @@ iptables -I INPUT -s 127.0.0.1 -j ACCEPT
 echo "Liberando Hosts de Provedores VOIP"
 iptables -A INPUT -s 199.87.121.0/24 -j ACCEPT
 iptables -A INPUT -s 199.87.121.15/32 -j ACCEPT
-iptables -A INPUT -s 199.36.250.15/32 -j ACCEPT
-iptables -A INPUT -s 35.198.61.0/24 -j ACCEPT
-iptables -A INPUT -s 200.162.143.0/24 -j ACCEPT
-iptables -A INPUT -s 200.162.139.0/24 -j ACCEPT
-iptables -A INPUT -s 200.162.131.0/24 -j ACCEPT
-iptables -A INPUT -s 177.70.25.28/32 -j ACCEPT
+
 
 
 echo "Liberando Hosts confiaveis"
 iptables -A INPUT -s 148.72.153.72/32 -j ACCEPT
-iptables -A INPUT -s 189.85.161.98/32 -j ACCEPT
-iptables -A INPUT -s 189.34.44.107/32 -j ACCEPT
+
+
 
 echo "Bloqueio SMTP"
 iptables -A INPUT -p tcp --dport 25 -j LOG --log-prefix '** BLOQUEIO SMTP **'
@@ -55,6 +50,12 @@ iptables -A INPUT -p tcp --dport 5432 -j DROP
 iptables -A INPUT -p tcp --dport 3306 -j LOG --log-prefix '** BLOQUEIO MYSQL **'
 iptables -A INPUT -p tcp --dport 3306 -j DROP
 
+echo "Bloqueio Asterisk e ast_Manager"
+iptables -A INPUT -p udp --dport 5060 -j LOG --log-prefix '** BLOQUEIO ASTERISK **'
+iptables -A INPUT -p udp --dport 5060 -j DROP
+
+iptables -A INPUT -p tcp --dport 5038 -j LOG --log-prefix '** BLOQUEIO ASTERISK **'
+iptables -A INPUT -p tcp --dport 5038 -j DROP
 
 
 
